@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Card AR - Célula Animal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Model Viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <!-- AR.js -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ar.js@3.3.2/aframe/build/aframe-ar.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #0A192F;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      width: 320px;
+      background: #112240;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 220px;
+      background: #000;
+      border-radius: 10px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      background: #00ADB5;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #ar-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      z-index: 999;
+    }
+
+    #closeAR {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: red;
+      padding: 10px;
+      color: white;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <h2>Célula Animal</h2>
+
+  <model-viewer 
+    src="/celula_animal.glb"
+    camera-controls 
+    auto-rotate>
+  </model-viewer>
+ 
+  <p>
+    A célula animal é uma estrutura complexa que contém núcleo, citoplasma e organelas responsáveis pelas funções vitais.
+  </p>
+
+  <button onclick="abrirAR()">Ver em RA</button>
+
+</div>
+
+<!-- AR FULLSCREEN -->
+<div id="ar-container">
+
+  <button id="closeAR" onclick="fecharAR()">Fechar</button>
+
+  <a-scene embedded arjs="sourceType: webcam;">
+    
+    <a-assets>
+      <a-asset-item id="modelo" src="/celula_animal.patt"></a-asset-item>
+    </a-assets>
+
+    <a-marker type="pattern" url="/celula_animal.patt">
+      <a-entity 
+        gltf-model="#modelo"
+        scale="0.5 0.5 0.5">
+      </a-entity>
+    </a-marker>
+
+    <a-entity camera></a-entity>
+
+  </a-scene>
+
+</div>
+
+<script>
+function abrirAR() {
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (!isMobile) {
+    alert("Abra no celular para usar AR 📱");
+    return;
+  }
+
+  document.getElementById("ar-container").style.display = "block";
+}
+
+function fecharAR() {
+  document.getElementById("ar-container").style.display = "none";
+}
+</script>
+
+</body>
+</html>
