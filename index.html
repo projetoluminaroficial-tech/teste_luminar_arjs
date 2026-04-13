@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Card AR - Célula Animal</title>
+  <title>Luminar - Célula Animal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Model Viewer -->
@@ -78,38 +78,39 @@
 <body>
 
 <div class="card">
-
   <h2>Célula Animal</h2>
 
+  <!-- VISUALIZAÇÃO 3D -->
   <model-viewer 
-    src="/celula_animal.glb"
+    src="celula_animal.glb"
     camera-controls 
     auto-rotate>
   </model-viewer>
- 
+
   <p>
-    A célula animal é uma estrutura complexa que contém núcleo, citoplasma e organelas responsáveis pelas funções vitais.
+    A célula animal possui núcleo, citoplasma e organelas responsáveis pelas funções vitais.
   </p>
 
   <button onclick="abrirAR()">Ver em RA</button>
-
 </div>
 
-<!-- AR FULLSCREEN -->
+<!-- AR -->
 <div id="ar-container">
 
   <button id="closeAR" onclick="fecharAR()">Fechar</button>
 
-  <a-scene embedded arjs="sourceType: webcam;">
-    
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+
     <a-assets>
-      <a-asset-item id="modelo" src="/celula_animal.patt"></a-asset-item>
+      <!-- MODELO CORRETO -->
+      <a-asset-item id="modelo" src="celula_animal.glb"></a-asset-item>
     </a-assets>
 
-    <a-marker type="pattern" url="/celula_animal.patt">
+    <!-- MARCADOR -->
+    <a-marker type="pattern" url="celula_animal.patt">
       <a-entity 
         gltf-model="#modelo"
-        scale="0.5 0.5 0.5">
+        scale="0.4 0.4 0.4">
       </a-entity>
     </a-marker>
 
@@ -121,13 +122,6 @@
 
 <script>
 function abrirAR() {
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-  if (!isMobile) {
-    alert("Abra no celular para usar AR 📱");
-    return;
-  }
-
   document.getElementById("ar-container").style.display = "block";
 }
 
